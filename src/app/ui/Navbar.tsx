@@ -45,7 +45,7 @@ export function Navbar() {
           <Link href="/" className="font-medium transition-colors hover:text-primary">
             Home
           </Link>
-          <Link href="/categories" className="font-medium transition-colors hover:text-primary">
+          <Link href="/bestsellers" className="font-medium transition-colors hover:text-primary">
             Categories
           </Link>
           <Link href="/best-sellers" className="font-medium transition-colors hover:text-primary">
@@ -68,7 +68,9 @@ export function Navbar() {
           </Button>
 
           {/* Sign in button */}
-          <Button>Sign in</Button>
+          <Button>
+            <Link href="/login">Sign in</Link>
+          </Button>
         </div>
       </div>
     </header>
