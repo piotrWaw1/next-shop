@@ -14,19 +14,65 @@ async function main() {
     password: "XDDD123"
   };
 
-  const product: typeof productsTable.$inferInsert = {
-    title: "Super product",
-    description: "Super product description. It is so supper.",
-    price: 199.99,
+  const products: typeof productsTable.$inferInsert[] = [
+    {
+      title: "Ultra HD Smart TV",
+      description: "65-inch 4K Ultra HD Smart TV with HDR and built-in streaming apps.",
+      price: 899.99,
+    },
+    {
+      title: "Wireless Noise-Canceling Headphones",
+      description: "Premium over-ear headphones with active noise cancellation and 30-hour battery life.",
+      price: 349.99,
+    },
+    {
+      title: "Ergonomic Office Chair",
+      description: "Comfortable ergonomic chair with adjustable lumbar support and breathable mesh back.",
+      price: 249.99,
+    },
+    {
+      title: "Smartphone Pro Max",
+      description: "Latest flagship smartphone with 6.7-inch OLED display and triple camera system.",
+      price: 1099.99,
+    },
+    {
+      title: "Electric Air Fryer",
+      description: "5.8-quart digital air fryer with 7 cooking presets and rapid air circulation technology.",
+      price: 129.99,
+    },
+    {
+      title: "Fitness Tracker Watch",
+      description: "Water-resistant fitness tracker with heart rate monitoring and 14-day battery life.",
+      price: 79.99,
+    },
+    {
+      title: "Robot Vacuum Cleaner",
+      description: "Smart robot vacuum with laser navigation and self-emptying base.",
+      price: 599.99,
+    },
+    {
+      title: "Blender Pro 2000",
+      description: "High-performance blender with 1500W motor and 8 preset programs for smoothies and soups.",
+      price: 199.99,
+    },
+    {
+      title: "Gaming Laptop",
+      description: "Powerful gaming laptop with RTX graphics and 240Hz refresh rate display.",
+      price: 1599.99,
+    },
+    {
+      title: "Smart Thermostat",
+      description: "Wi-Fi enabled smart thermostat that learns your schedule and saves energy.",
+      price: 199.99,
+    }
+  ];
+
+  // await db.insert(usersTable).values(user);
+  for (const product of products) {
+    await db.insert(productsTable).values(product);
   }
 
-  await db.insert(usersTable).values(user);
-  await db.insert(productsTable).values(product);
-  console.log('New user created!')
-
-
-
-  const users = await db.select().from(usersTable);
+  const users = await db.select().from(productsTable);
   console.log('Getting all users from the database: ', users)
 
 
@@ -57,4 +103,7 @@ async function main() {
   // console.log('User deleted!')
 }
 
-main();
+main().then();
+
+
+//  npx tsx src/index.ts
