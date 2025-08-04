@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, string } from "yup";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const loginForm = object({
   email: string().email().required(),
@@ -14,6 +16,8 @@ const loginForm = object({
 export type LoginFormRequest = InferType<typeof loginForm>
 
 export function LoginForm() {
+  const router = useRouter()
+
   const defaultValues = {
     email: "",
     password: "",
@@ -25,7 +29,17 @@ export function LoginForm() {
   })
 
   const onSubmit = form.handleSubmit(async (requestData: LoginFormRequest) => {
-    console.log(requestData)
+    const response = await signIn('credentials', {
+      email: requestData.email,
+      password: requestData.password,
+      redirect: false
+    });
+
+    if (response?.ok) {
+      router.push("/");
+      router.refresh();
+    }
+
   })
 
   return (

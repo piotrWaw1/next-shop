@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
+import { LogOutButton } from "@/components/navbars/LogOutButton";
 
 export default function Profile() {
   return (
@@ -15,7 +16,7 @@ export default function Profile() {
       <DropdownMenuTrigger asChild>
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png"/>
-          <AvatarFallback className="border"><User /></AvatarFallback>
+          <AvatarFallback className="border"><User/></AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
@@ -28,9 +29,7 @@ export default function Profile() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator/>
-        <DropdownMenuItem>
-          Log out
-        </DropdownMenuItem>
+        <LogOutButton/>
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash } from 'bcrypt'
-import { drizzle } from "drizzle-orm/node-postgres";
 import { usersTable } from "@/db/schema/schema";
-
-const db = drizzle(process.env.DATABASE_URL!);
+import { db } from "@/lib/drizzleDbConnection";
 
 export async function POST(request: Request) {
   try {

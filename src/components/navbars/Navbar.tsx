@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import Profile from "@/components/navbars/Profile";
+import { getServerSession } from "next-auth";
 
-export function Navbar() {
-  const logged = false;
+export async function Navbar() {
+  const session = await getServerSession();
+
 
   return (
     <nav className="flex justify-center  h-16 w-full shrink-0 border-b px-4 md:px-6">
@@ -69,7 +71,7 @@ export function Navbar() {
             <Search className="h-4 w-4"/>
             <span className="sr-only">Search</span>
           </Button>
-          {logged ? <Profile/> :
+          {session ? <Profile/> :
             <Button>
               <Link href="/login">Sign in</Link>
             </Button>

@@ -1,7 +1,14 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
+import {compare} from "bcrypt"
+import { db } from "@/lib/drizzleDbConnection";
+import { usersTable } from "@/db/schema/schema";
+import { eq } from "drizzle-orm";
 
 const handler = NextAuth({
+  session:{
+    strategy: "jwt",
+  },
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -21,17 +28,23 @@ const handler = NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        const res = await fetch("/your/endpoint", {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" }
-        })
-        const user = await res.json()
+        if(credentials){
+          const {email, password} = credentials
+          const user = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1)
+          const passwordCorrect = await compare(password, user[0].password)
 
-        // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user
+          if (passwordCorrect){
+            return {
+              id: `${user[0].id}`,
+              email: user[0].email,
+              firstName: user[0].firstName,
+              lastName: user[0].lastName
+            }
+          }
+
         }
+
+        // console.log(credentials)
         // Return null if user data could not be retrieved
         return null
       }
