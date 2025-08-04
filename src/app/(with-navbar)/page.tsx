@@ -39,21 +39,6 @@ function Product(props: { data: Product }) {
 }
 
 export default async function Home() {
-  let products: Product[] = [];
-  try {
-    const data = await fetch("http://localhost:3000/api/products");
-    products = await data.json();
-  } catch (e) {
-    console.error(e);
-    return (
-      <main className="flex justify-center mt-10">
-        <div className="container text-red-500 ">
-          Failed to load products. Please try again later.
-        </div>
-      </main>
-
-    );
-  }
 
   // console.log(products);
 
@@ -66,9 +51,6 @@ export default async function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <Product data={product} key={product.id}/>
-          ))}
         </div>
       </div>
     </main>
