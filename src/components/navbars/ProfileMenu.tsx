@@ -9,8 +9,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
 import { LogOutButton } from "@/components/navbars/LogOutButton";
+import Link from "next/link";
 
-export default function Profile() {
+export default function ProfileMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,12 +22,16 @@ export default function Profile() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-          </DropdownMenuItem>
+          <Link href="/profile">
+            <DropdownMenuItem>
+              Profile
+            </DropdownMenuItem>
+          </Link>
+          <Link href="/settings">
+            <DropdownMenuItem>
+              Settings
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator/>
         <LogOutButton/>

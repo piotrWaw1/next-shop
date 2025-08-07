@@ -2,10 +2,11 @@
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, ref, string } from "yup";
+import SubmitButton from "@/components/submitButton/submitButton";
+import { redirect } from "next/navigation";
 
 const registerForm = object({
   email: string().email().required(),
@@ -34,7 +35,9 @@ export function RegisterFrom(){
       method: "POST",
       body: JSON.stringify(requestData),
     })
-
+    if (response.ok){
+      redirect("/login")
+    }
     console.log(response)
   })
 
@@ -77,9 +80,9 @@ export function RegisterFrom(){
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <SubmitButton className="w-full">
           Sign up
-        </Button>
+        </SubmitButton>
       </form>
     </Form>
   )

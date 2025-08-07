@@ -4,11 +4,18 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import Profile from "@/components/navbars/Profile";
+import ProfileMenu from "@/components/navbars/ProfileMenu";
 import { getServerSession } from "next-auth";
+import { signOut } from "next-auth/react";
 
 export async function Navbar() {
-  const session = await getServerSession();
+  let session = undefined;
+
+  try {
+    session = await getServerSession();
+  } catch (e) {
+    await signOut()
+  }
 
 
   return (
@@ -71,7 +78,7 @@ export async function Navbar() {
             <Search className="h-4 w-4"/>
             <span className="sr-only">Search</span>
           </Button>
-          {session ? <Profile/> :
+          {session ? <ProfileMenu/> :
             <Button>
               <Link href="/login">Sign in</Link>
             </Button>

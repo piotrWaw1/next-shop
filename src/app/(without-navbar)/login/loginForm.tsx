@@ -2,12 +2,12 @@
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, string } from "yup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import SubmitButton from "@/components/submitButton/submitButton";
 
 const loginForm = object({
   email: string().email().required(),
@@ -69,9 +69,9 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <SubmitButton className="w-full">
           Login
-        </Button>
+        </SubmitButton>
       </form>
     </Form>
   )

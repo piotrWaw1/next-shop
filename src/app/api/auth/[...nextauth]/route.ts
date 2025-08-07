@@ -1,13 +1,19 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
-import {compare} from "bcrypt"
+import { compare } from "bcrypt"
 import { db } from "@/lib/drizzleDbConnection";
 import { usersTable } from "@/db/schema/schema";
 import { eq } from "drizzle-orm";
 
 const handler = NextAuth({
-  session:{
+  session: {
     strategy: "jwt",
+  },
+  jwt: {
+    maxAge: 60 * 60,
+  },
+  pages: {
+    signIn: "/login",
   },
   providers: [
     CredentialsProvider({
@@ -28,12 +34,12 @@ const handler = NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        if(credentials){
-          const {email, password} = credentials
+        if (credentials) {
+          const { email, password } = credentials
           const user = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1)
           const passwordCorrect = await compare(password, user[0].password)
 
-          if (passwordCorrect){
+          if (passwordCorrect) {
             return {
               id: `${user[0].id}`,
               email: user[0].email,
