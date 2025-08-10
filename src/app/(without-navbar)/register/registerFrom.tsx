@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, ref, string } from "yup";
 import SubmitButton from "@/components/submitButton/submitButton";
 import { redirect } from "next/navigation";
+import { useState } from "react";
 
 const registerForm = object({
   email: string().email().required(),
@@ -18,7 +19,9 @@ const registerForm = object({
 
 export type RegisterFormRequest = InferType<typeof registerForm>
 
-export function RegisterFrom(){
+export function RegisterFrom() {
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const defaultValues = {
     email: "",
     password: "",
@@ -35,10 +38,15 @@ export function RegisterFrom(){
       method: "POST",
       body: JSON.stringify(requestData),
     })
-    if (response.ok){
+    const {message} = await response.json();
+
+    if (response.ok) {
       redirect("/login")
     }
-    console.log(response)
+    if (response.status >= 400){
+      setErrorMessage(message)
+    }
+
   })
 
   return (
@@ -74,12 +82,13 @@ export function RegisterFrom(){
             <FormItem className="pb-4">
               <FormLabel>Repeat password</FormLabel>
               <FormControl>
-                <Input {...field} type="password" />
+                <Input {...field} type="password"/>
               </FormControl>
               <FormMessage/>
             </FormItem>
           )}
         />
+        {errorMessage && <p className="mb-2 text-red-600 font-bold">{errorMessage}</p>}
         <SubmitButton className="w-full">
           Sign up
         </SubmitButton>

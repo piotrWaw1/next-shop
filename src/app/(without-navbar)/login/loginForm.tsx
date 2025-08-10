@@ -8,6 +8,7 @@ import { InferType, object, string } from "yup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/submitButton/submitButton";
+import { useState } from "react";
 
 const loginForm = object({
   email: string().email().required(),
@@ -16,7 +17,8 @@ const loginForm = object({
 export type LoginFormRequest = InferType<typeof loginForm>
 
 export function LoginForm() {
-  const router = useRouter()
+  const router = useRouter();
+  const [isSuccess, setIsSuccess] = useState<boolean>(true);
 
   const defaultValues = {
     email: "",
@@ -34,10 +36,15 @@ export function LoginForm() {
       password: requestData.password,
       redirect: false
     });
+    console.log("response")
+    console.log(response)
 
     if (response?.ok) {
       router.push("/");
       router.refresh();
+    }
+    else{
+      setIsSuccess(false)
     }
 
   })
@@ -69,6 +76,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
+        {isSuccess || <p className="mb-2 text-red-600 font-bold">Incorrect email or password</p>}
         <SubmitButton className="w-full">
           Login
         </SubmitButton>
