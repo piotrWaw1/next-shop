@@ -1,4 +1,5 @@
 import { doublePrecision, integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { InferSelectModel } from "drizzle-orm";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -14,6 +15,7 @@ export const productsTable = pgTable("products", {
   description: varchar({ length: 255 }).notNull(),
   price: doublePrecision().notNull(),
 })
+export type Product = InferSelectModel<typeof productsTable>;
 
 export const productsImageTable = pgTable("products_images", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
