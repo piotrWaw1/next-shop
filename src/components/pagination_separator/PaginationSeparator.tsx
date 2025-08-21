@@ -5,20 +5,21 @@ interface PaginationSeparatorProps {
   children: React.ReactNode;
   currentPage: number;
   totalPages: number;
+  pagesOffset: number;
 }
 
 export default function PaginationSeparator(props: PaginationSeparatorProps) {
-  const { children, currentPage, totalPages } = props;
+  const { children, currentPage, totalPages, pagesOffset } = props;
 
   return (
     <>
-      {currentPage - 1 > 2 &&
+      {currentPage - pagesOffset > 2 &&
           <PaginationItem>
               <PaginationEllipsis/>
           </PaginationItem>
       }
       {children}
-      {currentPage + 1 < totalPages - 1 &&
+      {currentPage + pagesOffset < totalPages - pagesOffset &&
           <PaginationItem>
               <PaginationEllipsis/>
           </PaginationItem>

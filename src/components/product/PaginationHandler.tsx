@@ -11,7 +11,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import PaginationSeparator from "@/components/pagination_separator/PaginationSeparator";
 
-const NEXT_PAGES = 1;
+const PAGES_OFFSET = 1;
 
 export function PaginationHandler({ totalPages }: { totalPages: number }) {
 
@@ -57,8 +57,8 @@ export function PaginationHandler({ totalPages }: { totalPages: number }) {
     }
 
     return generateArray(
-      Math.max(2, currentPage - NEXT_PAGES),
-      Math.min(totalPages - 1, currentPage + NEXT_PAGES)
+      Math.max(2, currentPage - PAGES_OFFSET),
+      Math.min(totalPages - 1, currentPage + PAGES_OFFSET)
     );
   };
 
@@ -72,7 +72,7 @@ export function PaginationHandler({ totalPages }: { totalPages: number }) {
           <Button disabled={currentPage === 1} onClick={() => createPageURL(1)}
                   variant="outline">{1}</Button>
         </PaginationItem>
-        <PaginationSeparator currentPage={currentPage} totalPages={totalPages}>
+        <PaginationSeparator currentPage={currentPage} totalPages={totalPages} pagesOffset={PAGES_OFFSET}>
           {pagesToDisplay().map((page) => (
             <PaginationItem key={page}>
               <Button disabled={currentPage === page} onClick={() => createPageURL(page)}
