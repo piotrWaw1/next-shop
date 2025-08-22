@@ -1,46 +1,36 @@
-import { ProductCard } from "@/components/product/ProductCard";
-import { DataFetchError } from "@/components/errorMessages/DataFetchError";
 import { PaginationHandler } from "@/components/product/PaginationHandler";
-import { fetchProducts, fetchProductsPages } from "@/lib/data/products";
+import { fetchProductsPages } from "@/lib/data/products";
 import { Suspense } from "react";
+import { ProductsList } from "@/components/product/ProductsList";
 
 const DEFAULT_PAGE_SIZE = 12
 
+interface SearchParams {
+  query?: string;
+  page?: string;
+  pageSize?: string;
+}
+
 export default async function Home(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
+  searchParams?: Promise<SearchParams>;
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
+  const pageSize = Number(searchParams?.pageSize || DEFAULT_PAGE_SIZE);
 
-  let products: Awaited<ReturnType<typeof fetchProducts>> | undefined;
-
-  try {
-    products = await fetchProducts(DEFAULT_PAGE_SIZE, currentPage);
-  } catch (e) {
-    products = undefined
-  }
-
-  const totalPages = await fetchProductsPages(DEFAULT_PAGE_SIZE);
+  const totalPages = await fetchProductsPages(pageSize);
 
 
   return (
     <div>
       <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
       <p className="text-gray-600">Discover our latest collection of premium tech accessories</p>
-      {!products ? <DataFetchError/> :
-        <Suspense key={query + currentPage} fallback="loading">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {products?.map((product) => (
-              <ProductCard product={product} key={product.id}/>
-            ))}
-          </div>
-          <PaginationHandler totalPages={totalPages}/>
-        </Suspense>
-      }
+      <Suspense key={query + currentPage} fallback="loading">
+        <ProductsList query={query} currentPage={currentPage} pageSize={pageSize}/>
+      </Suspense>
+      <PaginationHandler totalPages={totalPages}/>
+
     </div>
   );
 }
