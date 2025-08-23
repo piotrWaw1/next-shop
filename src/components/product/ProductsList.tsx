@@ -5,13 +5,13 @@ interface ProductsListProps {
   currentPage: number;
   pageSize: number;
   query: string;
+  sortOrder?: "asc" | "desc";
 }
 
 export async function ProductsList(props: ProductsListProps) {
 
-  const { query, currentPage, pageSize } = props;
-  let products: Awaited<ReturnType<typeof fetchProducts>> | undefined = await fetchProducts(pageSize, currentPage);
-
+  const { query, currentPage, pageSize, sortOrder } = props;
+  let products: Awaited<ReturnType<typeof fetchProducts>> | undefined = await fetchProducts(pageSize, currentPage, sortOrder);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

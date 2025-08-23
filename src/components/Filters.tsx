@@ -1,0 +1,69 @@
+'use client'
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+const DEFAULT_PAGE_SIZE = "12";
+
+export function Filters() {
+
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const currentPageSize = searchParams.get('pageSize') || DEFAULT_PAGE_SIZE;
+  const currentSortOrder = searchParams.get("sortOrder") || "default";
+
+  const setPageSize = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    value === DEFAULT_PAGE_SIZE
+      ? params.delete("pageSize")
+      : params.set("pageSize", value);
+
+    params.delete("page");
+
+    replace(`${pathname}?${params.toString()}`)
+  }
+
+  const setSortBy = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    value === "default"
+      ? params.delete("sortOrder")
+      : params.set("sortOrder", value);
+
+    params.delete("page");
+
+    replace(`${pathname}?${params.toString()}`)
+  }
+
+  return (
+    <div className="flex flex-row gap-5">
+      <div>
+        <label className="text-sm font-medium text-gray-700">Page size</label>
+        <Select value={currentPageSize} onValueChange={setPageSize}>
+          <SelectTrigger className="w-full sm:w-[120px]">
+            <SelectValue/>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="12">12 items</SelectItem>
+            <SelectItem value="24">24 items</SelectItem>
+            <SelectItem value="36">36 items</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700">Sort price</label>
+        <Select value={currentSortOrder} onValueChange={setSortBy}>
+          <SelectTrigger className="w-full sm:w-[140px]">
+            <SelectValue/>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="default">Default</SelectItem>
+            <SelectItem value="asc">Ascending</SelectItem>
+            <SelectItem value="desc">Descending</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  )
+}

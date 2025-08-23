@@ -14,6 +14,7 @@ export const productsTable = pgTable("products", {
   title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
   price: doublePrecision().notNull(),
+  category: integer().notNull().references(() => productsCategoryTable.id, { onDelete: "cascade" }),
 })
 export type Product = InferSelectModel<typeof productsTable>;
 
@@ -22,4 +23,9 @@ export const productsImageTable = pgTable("products_images", {
   productId: integer("product_id").notNull()
     .references(() => productsTable.id, { onDelete: "cascade" }),
   url: varchar({ length: 500 }).notNull(),
+})
+
+export const productsCategoryTable = pgTable("products_categorys", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  title: varchar({ length: 255 }).notNull(),
 })

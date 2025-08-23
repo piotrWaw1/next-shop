@@ -26,14 +26,14 @@ export function PaginationHandler({ totalPages }: { totalPages: number }) {
     replace(`${pathname}?${params.toString()}`)
   };
 
-  const previousPage = () => {
+  const previous = () => {
     const params = new URLSearchParams(searchParams);
     const previousPage = currentPage - 1 || 1;
     params.set('page', `${previousPage}`);
     replace(`${pathname}?${params.toString()}`)
   }
 
-  const nextPage = () => {
+  const next = () => {
     const params = new URLSearchParams(searchParams);
     const nextPage = currentPage + 1 > totalPages ? totalPages : currentPage + 1;
     params.set('page', `${nextPage}`);
@@ -45,7 +45,7 @@ export function PaginationHandler({ totalPages }: { totalPages: number }) {
 
   const pagesToDisplay = (): number[] => {
     if (totalPages <= 5) {
-      return generateArray(1, totalPages);
+      return generateArray(2, totalPages - 1);
     }
 
     if (currentPage === 1) {
@@ -66,7 +66,7 @@ export function PaginationHandler({ totalPages }: { totalPages: number }) {
     <Pagination className="mt-5">
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={previousPage}/>
+          <PaginationPrevious onClick={previous}/>
         </PaginationItem>
         <PaginationItem>
           <Button disabled={currentPage === 1} onClick={() => createPageURL(1)}
@@ -81,11 +81,13 @@ export function PaginationHandler({ totalPages }: { totalPages: number }) {
           ))}
         </PaginationSeparator>
         <PaginationItem>
-          <Button disabled={currentPage === totalPages} onClick={() => createPageURL(totalPages)}
+          <Button disabled={currentPage === totalPages}
+                  hidden={totalPages <= 1}
+                  onClick={() => createPageURL(totalPages)}
                   variant="outline">{totalPages}</Button>
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={nextPage}/>
+          <PaginationNext onClick={next}/>
         </PaginationItem>
       </PaginationContent>
     </Pagination>
