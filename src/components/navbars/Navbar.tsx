@@ -7,6 +7,11 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import ProfileMenu from "@/components/navbars/ProfileMenu";
 import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
+import {
+  NavigationMenu,
+  NavigationMenuItem, NavigationMenuLink, NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import NavigationMenuDropDown from "@/components/navbars/NavigationMenuDropDown";
 
 export async function Navbar() {
   let session = undefined;
@@ -16,7 +21,6 @@ export async function Navbar() {
   } catch (e) {
     await signOut()
   }
-
 
   return (
     <nav className="flex justify-center  h-16 w-full shrink-0 border-b px-4 md:px-6">
@@ -54,15 +58,25 @@ export async function Navbar() {
 
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/" className="font-medium transition-colors hover:text-primary">
-            Home
-          </Link>
-          <Link href="/bestsellers" className="font-medium transition-colors hover:text-primary">
-            Categories
-          </Link>
-          <Link href="/best-sellers" className="font-medium transition-colors hover:text-primary">
-            Best sellers
-          </Link>
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link href="/" className="font-medium transition-colors hover:text-primary">
+                    Home
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuDropDown/>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link href="/best-sellers" className="font-medium transition-colors hover:text-primary">
+                    Best sellers
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </nav>
 
         {/* Right side - Search and Sign in */}
