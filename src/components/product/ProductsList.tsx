@@ -23,7 +23,7 @@ export async function ProductsList(props: {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
   const sortOrder = searchParams?.sortOrder;
-  const pageSize = Number(searchParams?.pageSize || DEFAULT_PAGE_SIZE);
+  const pageSize = Number(searchParams?.pageSize) || DEFAULT_PAGE_SIZE;
 
   const category = params?.category;
 

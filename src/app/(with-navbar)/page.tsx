@@ -12,15 +12,17 @@ export interface SearchParams {
 export default async function Home(props: { searchParams?: Promise<SearchParams> }) {
 
   return (
-    <>
-      <div className="flex justify-between items-center mb-5">
-        <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
-          <p className="text-gray-600">Discover our latest collection of premium tech accessories</p>
+    (
+      <div className="w-full mx-auto px-4 sm:px-0">
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
+            <p className="text-gray-600">Discover our latest collection of premium tech accessories</p>
+          </div>
+          <Filters/>
         </div>
-        <Filters/>
+        <ProductsList {...props} />
       </div>
-      <ProductsList {...props}/>
-    </>
+    )
   );
 }
