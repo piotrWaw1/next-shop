@@ -1,5 +1,5 @@
 import { db } from "@/lib/drizzleDbConnection";
-import { asc, desc, eq, ilike, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
 import { productsCategoryTable, productsTable } from "@/db/schema/schema";
 
 async function fetchCategoryId(category: string) {
@@ -12,48 +12,65 @@ async function fetchCategoryId(category: string) {
   return categoryId
 }
 
-async function fetchProductsPages(pageSize: number, categoryId?: number) {
-  let productsCount;
+async function fetchProductsPages(pageSize: number, categoryId?: number, query?: string) {
+  const conditions = [];
+
   if (categoryId) {
-    productsCount = await db.select({ count: sql<number>`count(*)` })
-      .from(productsTable).where(eq(productsTable.category, categoryId))
+    conditions.push(eq(productsTable.category, categoryId));
   }
-  else{
-    productsCount = await db.select({ count: sql<number>`count(*)` })
-      .from(productsTable)
+
+  if (query) {
+    conditions.push(ilike(productsTable.title, `%${query}%`));
   }
+
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+
+  const productsCount = await db
+    .select({ count: count() })
+    .from(productsTable)
+    .where(whereClause);
+
   return Math.ceil(productsCount[0].count / pageSize);
 }
 
-export async function fetchProducts(pageSize: number, page: number, sortOrder?: "asc" | "desc", category?: string) {
+export async function fetchProducts(pageSize: number, page: number, sortOrder?: "asc" | "desc", category?: string, searchQuery?: string) {
   const offset = (page - 1) * pageSize;
-  let totalPages = 0
+  let categoryId;
 
-  let query = db
+  let baseQuery = db
     .select({
       id: productsTable.id,
       title: productsTable.title,
       price: productsTable.price,
     })
-    .from(productsTable) as any
+    .from(productsTable) as any;
 
   if (sortOrder) {
-    query = query
-      .orderBy(sortOrder === "asc" ? asc(productsTable.price) : desc(productsTable.price))
+    baseQuery = baseQuery.orderBy(
+      sortOrder === "asc" ? asc(productsTable.price) : desc(productsTable.price)
+    );
   }
 
   if (category) {
     const normalizedCategory = decodeURIComponent(category).toLowerCase();
-    const categoryId = await fetchCategoryId(normalizedCategory)
-    if (categoryId) {
-      query = query.where(eq(productsTable.category, categoryId.id))
-      totalPages = await fetchProductsPages(pageSize, categoryId.id)
+    const categoryResponse = await fetchCategoryId(normalizedCategory)
+    if (categoryResponse) {
+      categoryId = categoryResponse.id;
+      const conditions = []
+      conditions.push(eq(productsTable.category, categoryId));
+
+      if (searchQuery) {
+        console.log("Category query")
+        conditions.push(ilike(productsTable.title, `%${searchQuery}%`))
+      }
+      baseQuery = baseQuery.where(and(...conditions));
     }
-  } else {
-    totalPages = await fetchProductsPages(pageSize)
+  } else if (searchQuery) {
+    baseQuery = baseQuery.where(ilike(productsTable.title, `%${searchQuery}%`));
   }
 
-  const products = await query.limit(pageSize).offset(offset)
+  const products = await baseQuery.limit(pageSize).offset(offset);
+  const totalPages = await fetchProductsPages(pageSize, categoryId, searchQuery)
 
   return { products, totalPages };
 }

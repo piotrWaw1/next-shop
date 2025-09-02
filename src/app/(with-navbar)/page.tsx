@@ -1,5 +1,5 @@
 import { ProductsList } from "@/components/product/ProductsList";
-import { Filters } from "@/components/Filters";
+import { Filters } from "@/components/filters/Filters";
 
 export interface SearchParams {
   query?: string;

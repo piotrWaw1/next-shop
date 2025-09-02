@@ -30,7 +30,7 @@ export async function ProductsList(props: {
   const { products, totalPages }: {
     products: Awaited<Product[]>,
     totalPages: number
-  } = await fetchProducts(pageSize, currentPage, sortOrder, category);
+  } = await fetchProducts(pageSize, currentPage, sortOrder, category, query);
 
   return (
     <Suspense key={query + currentPage + sortOrder + pageSize} fallback="loading">

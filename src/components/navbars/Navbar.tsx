@@ -1,8 +1,7 @@
-import { Menu, Search } from "lucide-react"
+import { Menu } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import ProfileMenu from "@/components/navbars/ProfileMenu";
 import { getServerSession } from "next-auth";
@@ -12,6 +11,7 @@ import {
   NavigationMenuItem, NavigationMenuLink, NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import NavigationMenuDropDown from "@/components/navbars/NavigationMenuDropDown";
+import { SearchBar } from "@/components/filters/SearchBar";
 
 export async function Navbar() {
   let session = undefined;
@@ -81,17 +81,7 @@ export async function Navbar() {
 
         {/* Right side - Search and Sign in */}
         <div className="ml-auto flex items-center gap-4">
-          {/* Search bar */}
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
-            <Input type="search" placeholder="Search products..." className="pl-8 w-[200px] lg:w-[300px]"/>
-          </div>
-
-          {/* Mobile search button */}
-          <Button variant="outline" size="icon" className="sm:hidden bg-transparent">
-            <Search className="h-4 w-4"/>
-            <span className="sr-only">Search</span>
-          </Button>
+          <SearchBar/>
           {session ? <ProfileMenu/> :
             <Button>
               <Link href="/login">Sign in</Link>

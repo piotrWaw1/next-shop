@@ -1,5 +1,5 @@
 import { SearchParams } from "@/app/(with-navbar)/page";
-import { Filters } from "@/components/Filters";
+import { Filters } from "@/components/filters/Filters";
 import { ProductsList } from "@/components/product/ProductsList";
 
 interface CategoryParams {
