@@ -11,7 +11,7 @@ export default async function NavigationMenuDropDown() {
   const categories = await fetchAllCategories();
 
   return (
-    <NavigationMenuItem>
+    <NavigationMenuItem className="z-50">
       <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
       <NavigationMenuContent>
         <ul className="grid w-[200px] gap-4">

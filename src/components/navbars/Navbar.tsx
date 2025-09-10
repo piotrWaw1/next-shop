@@ -67,7 +67,9 @@ export async function Navbar() {
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
+
               <NavigationMenuDropDown/>
+
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link href="/best-sellers" className="font-medium transition-colors hover:text-primary">
