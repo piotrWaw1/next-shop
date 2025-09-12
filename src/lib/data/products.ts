@@ -1,13 +1,6 @@
 import { db } from "@/lib/drizzleDbConnection";
 import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
-import { productsCategoryTable, productsTable } from "@/db/schema/schema";
-
-interface Products {
-  id: number;
-  title: string;
-  price: number;
-  category: string;
-}
+import { Product, productsCategoryTable, productsTable } from "@/db/schema/schema";
 
 async function fetchProductsPages(pageSize: number, category?: string, query?: string) {
   const conditions = [];
@@ -70,10 +63,7 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
     baseQuery = baseQuery.where(ilike(productsTable.title, `%${searchQuery}%`));
   }
 
-  const products: Products[] = await baseQuery.limit(pageSize).offset(offset);
-
-
-
+  const products: Product[] = await baseQuery.limit(pageSize).offset(offset);
   const totalPages = await fetchProductsPages(pageSize, normalizedCategory, searchQuery)
 
   return { products, totalPages };

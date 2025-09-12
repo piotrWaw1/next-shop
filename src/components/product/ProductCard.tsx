@@ -21,9 +21,11 @@ export function ProductCard({ product }: ProductProps) {
         />
       </div>
       <CardContent className="p-4 space-y-3">
-        <h3 className="font-semibold text-lg text-gray-900 line-clamp-2 leading-tight">{product.title}</h3>
+        <h3
+          className="font-semibold text-lg text-gray-900 line-clamp-2 leading-tight dark:text-white">{product.title}
+        </h3>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
+          <span className="text-2xl font-bold text-gray-900 dark:text-white">${product.price.toFixed(2)}</span>
         </div>
         <Button className="w-full" size="lg">
           <ShoppingCart className="w-4 h-4 mr-2"/>

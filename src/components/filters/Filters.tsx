@@ -39,7 +39,7 @@ export function Filters() {
   return (
     <div className="flex flex-col sm:flex-row gap-4 min-w-0">
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-gray-700">Page size</label>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Page size</label>
         <Select value={currentPageSize} onValueChange={setPageSize}>
           <SelectTrigger className="w-full sm:w-[120px]">
             <SelectValue/>
@@ -52,7 +52,7 @@ export function Filters() {
         </Select>
       </div>
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-gray-700">Sort price</label>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Sort price</label>
         <Select value={currentSortOrder} onValueChange={setSortBy}>
           <SelectTrigger className="w-full sm:w-[140px]">
             <SelectValue/>
