@@ -7,7 +7,9 @@ export async function fetchAllCategories() {
 }
 
 export async function isCategoryExist(category: string) {
-  const result = await db.select().from(productsCategoryTable).where(ilike(productsCategoryTable.title, category));
+  const normalizeCategory = decodeURIComponent(category).toLowerCase();
+  const result = await db.select().from(productsCategoryTable).where(ilike(productsCategoryTable.title, normalizeCategory));
+  const exist = result.length > 0;
 
-  return result.length > 0;
+  return { exist, result };
 }

@@ -16,9 +16,9 @@ interface CategoryParams {
 export default async function Category(props: CategoryParams) {
 
   const { category } = await props.params;
-  const isExist = await isCategoryExist(category);
+  const { exist, result } = await isCategoryExist(category);
 
-  if (!isExist){
+  if (!exist) {
     notFound()
   }
 
@@ -26,7 +26,7 @@ export default async function Category(props: CategoryParams) {
     <>
       <div className="flex justify-between items-center mb-5">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">{category}</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">{result[0].title}</h2>
           <p className="text-gray-600">Category</p>
         </div>
         <Filters/>
