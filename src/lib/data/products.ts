@@ -2,6 +2,13 @@ import { db } from "@/lib/drizzleDbConnection";
 import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
 import { productsCategoryTable, productsTable } from "@/db/schema/schema";
 
+interface Products {
+  id: number;
+  title: string;
+  price: number;
+  category: string;
+}
+
 async function fetchProductsPages(pageSize: number, category?: string, query?: string) {
   const conditions = [];
 
@@ -34,6 +41,7 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
       id: productsTable.id,
       title: productsTable.title,
       price: productsTable.price,
+      category: productsCategoryTable.title,
     })
     .from(productsTable)
     .innerJoin(
@@ -62,7 +70,10 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
     baseQuery = baseQuery.where(ilike(productsTable.title, `%${searchQuery}%`));
   }
 
-  const products = await baseQuery.limit(pageSize).offset(offset);
+  const products: Products[] = await baseQuery.limit(pageSize).offset(offset);
+
+
+
   const totalPages = await fetchProductsPages(pageSize, normalizedCategory, searchQuery)
 
   return { products, totalPages };

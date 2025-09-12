@@ -1,6 +1,8 @@
 import { SearchParams } from "@/app/(with-navbar)/page";
 import { Filters } from "@/components/filters/Filters";
 import { ProductsList } from "@/components/product/ProductsList";
+import { isCategoryExist } from "@/lib/data/categories";
+import { notFound } from "next/navigation";
 
 interface CategoryParams {
   category: string;
@@ -13,13 +15,18 @@ interface CategoryParams {
 
 export default async function Category(props: CategoryParams) {
 
-  const params = await props.params
+  const { category } = await props.params;
+  const isExist = await isCategoryExist(category);
+
+  if (!isExist){
+    notFound()
+  }
 
   return (
     <>
       <div className="flex justify-between items-center mb-5">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">{params.category}</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">{category}</h2>
           <p className="text-gray-600">Category</p>
         </div>
         <Filters/>
@@ -27,4 +34,5 @@ export default async function Category(props: CategoryParams) {
       <ProductsList {...props} />
     </>
   )
+
 }
