@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, ref, string } from "yup";
 import SubmitButton from "@/components/submitButton/submitButton";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import { registerUser } from "@/app/(without-navbar)/register/actions";
+import { useActionState } from "react";
 
 const registerForm = object({
   email: string().email().required(),
@@ -20,42 +20,26 @@ const registerForm = object({
 export type RegisterFormRequest = InferType<typeof registerForm>
 
 export function RegisterFrom() {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [state, formAction] = useActionState(registerUser, undefined);
 
-  const defaultValues = {
-    email: "",
-    password: "",
-    repeatPassword: "",
-  }
   const form = useForm<RegisterFormRequest>({
     resolver: yupResolver(registerForm),
-    defaultValues,
+    defaultValues: {
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
     mode: "onTouched",
-  })
-
-  const onSubmit = form.handleSubmit(async (requestData: RegisterFormRequest) => {
-    const response = await fetch('/api/auth/register', {
-      method: "POST",
-      body: JSON.stringify(requestData),
-    })
-    const {message} = await response.json();
-
-    if (response.ok) {
-      redirect("/login")
-    }
-    if (response.status >= 400){
-      setErrorMessage(message)
-    }
-
   })
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit}>
+      <form action={formAction}>
         <FormField
           name={"email"}
+          control={form.control}
           render={({ field }) => (
-            <FormItem className="pb-3">
+            <FormItem className="pb-4">
               <FormLabel>E-mail</FormLabel>
               <FormControl>
                 <Input {...field} type="email"/>
@@ -66,6 +50,7 @@ export function RegisterFrom() {
         />
         <FormField
           name={"password"}
+          control={form.control}
           render={({ field }) => (
             <FormItem className="pb-4">
               <FormLabel>Password</FormLabel>
@@ -78,6 +63,7 @@ export function RegisterFrom() {
         />
         <FormField
           name={"repeatPassword"}
+          control={form.control}
           render={({ field }) => (
             <FormItem className="pb-4">
               <FormLabel>Repeat password</FormLabel>
@@ -88,10 +74,10 @@ export function RegisterFrom() {
             </FormItem>
           )}
         />
-        {errorMessage && <p className="mb-2 text-red-600 font-bold">{errorMessage}</p>}
         <SubmitButton className="w-full">
           Sign up
         </SubmitButton>
+        {state?.message && <p className="mt-2 text-destructive">{state.message}</p>}
       </form>
     </Form>
   )
