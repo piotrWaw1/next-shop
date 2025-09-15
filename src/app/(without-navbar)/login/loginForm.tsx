@@ -76,10 +76,10 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        {isSuccess || <p className="mb-2 text-red-600 font-bold">Incorrect email or password</p>}
         <SubmitButton className="w-full">
           Login
         </SubmitButton>
+        {isSuccess || <p className="mt-2 text-destructive text-sm">Incorrect email or password</p>}
       </form>
     </Form>
   )
