@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { ProfileButtons } from "@/components/profile/ProfileButtons";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 // Sample purchase data
 const purchases = [
@@ -43,23 +44,21 @@ const purchases = [
   }
 ]
 
-export default function Profile() {
+export default async function Profile() {
+  const session = await getServerSession(authOptions);
+  console.log(session)
+
   return (
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
-          <Avatar className="h-15 w-15">
-            <AvatarImage src="/placeholder.svg?height=40&width=40" alt="Profile"/>
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
           <div className="text-left">
-            <p className="font-medium">John</p>
-            <p className="font-medium">Doe</p>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Profile</h2>
           </div>
         </div>
 
-      <ProfileButtons/>
+        <ProfileButtons/>
       </div>
 
       {/* Main Content */}

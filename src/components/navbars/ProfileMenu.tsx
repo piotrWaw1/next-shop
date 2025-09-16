@@ -27,7 +27,7 @@ export default function ProfileMenu() {
               Profile
             </DropdownMenuItem>
           </Link>
-          <Link href="/settings">
+          <Link href="/profile/settings">
             <DropdownMenuItem>
               Settings
             </DropdownMenuItem>

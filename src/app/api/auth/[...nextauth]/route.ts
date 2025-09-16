@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcrypt"
 import { db } from "@/lib/drizzleDbConnection";
 import { usersTable } from "@/db/schema/schema";
 import { eq } from "drizzle-orm";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 60 * 60,
@@ -48,15 +48,37 @@ const handler = NextAuth({
               lastName: user[0].lastName
             }
           }
-
+          // Password123!@#
         }
-
-        // console.log(credentials)
-        // Return null if user data could not be retrieved
         return null
       }
     })
-  ]
-})
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        console.log("From JWT: ",user)
+        token.id = user.id;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+
+      return {
+        ...session,
+        user:{
+          id: token.id,
+          email: token.email
+        }
+      };
+    },
+  },
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST };
+
+
+
