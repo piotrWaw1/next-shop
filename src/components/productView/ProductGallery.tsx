@@ -35,7 +35,7 @@ export function ProductGallery() {
             onClick={() => setSelectedImage(index)}
             className={cn(
               "aspect-square bg-card rounded-lg overflow-hidden border-2 transition-colors",
-              selectedImage === index ? "border-accent" : "border-border hover:border-accent/50",
+              selectedImage === index ? "opacity-50" : "border-border hover:opacity-50",
             )}
           >
             <Image

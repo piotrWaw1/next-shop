@@ -21,7 +21,7 @@ async function main() {
       "description": "Premium noise-cancelling headphones with 30-hour battery life",
       "price": 129.99,
       "category": 1,
-      "amount": 45,
+      "amount": 0,
       "warranty": 24
     },
     {
@@ -37,7 +37,7 @@ async function main() {
       "description": "100% organic cotton crew neck t-shirt, available in multiple colors",
       "price": 29.95,
       "category": 2,
-      "amount": 92,
+      "amount": 0,
       "warranty": null
     },
     {

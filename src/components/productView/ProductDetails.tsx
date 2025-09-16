@@ -1,10 +1,11 @@
 // import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+// import { Button } from "@/components/ui/button"
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart, Share2, Minus, Plus } from "lucide-react"
+import { Star } from "lucide-react"
 import { getProductInformation } from "@/lib/data/productDetails";
 import { ProductAvailabilityAndPolicy } from "@/components/productView/productDescription/ProductAvailabilityAndPolicy";
+import { ProductDetailsPicker } from "@/components/productView/productDescription/ProductDetailsPicker";
 
 interface ProductDetailsProps {
   productId: string;
@@ -52,7 +53,7 @@ export async function ProductDetails(props: ProductDetailsProps) {
       {/* Price */}
       <div className="space-y-2">
         <div className="flex items-center gap-3">
-          <span className="text-3xl font-bold text-accent dark:text-white">${data.price}</span>
+          <span className="text-3xl font-bold text-black dark:text-white">${data.price}</span>
           {/*<span className="text-lg text-muted-foreground line-through">$399.99</span>*/}
           {/*<Badge variant="destructive">25% OFF</Badge>*/}
         </div>
@@ -91,37 +92,7 @@ export async function ProductDetails(props: ProductDetailsProps) {
       {/*  </Select>*/}
       {/*</div>*/}
 
-      {/* Quantity */}
-      <div className="space-y-3">
-        <h3 className="font-semibold">Quantity</h3>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="icon" /*onClick={decrementQuantity} disabled={quantity <= 1}*/>
-            <Minus className="w-4 h-4"/>
-          </Button>
-          {/*<span className="w-12 text-center font-semibold">{quantity}</span>*/}
-          <Button variant="outline" size="icon" /*onClick={incrementQuantity}*/>
-            <Plus className="w-4 h-4"/>
-          </Button>
-          <p className="font-semibold">Available: {data.amount}</p>
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="space-y-3">
-        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" size="lg">
-          Add to Cart
-        </Button>
-        <div className="flex gap-3">
-          <Button variant="outline" className="flex-1 bg-transparent">
-            <Heart className="w-4 h-4 mr-2"/>
-            Wishlist
-          </Button>
-          <Button variant="outline" className="flex-1 bg-transparent">
-            <Share2 className="w-4 h-4 mr-2"/>
-            Share
-          </Button>
-        </div>
-      </div>
+      <ProductDetailsPicker {...data}/>
 
       {/* Product Features */}
       <ProductAvailabilityAndPolicy {...data}/>
