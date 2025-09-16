@@ -22,7 +22,6 @@ export async function registerUser(state: any, formData: FormData) {
     await registerFormSchema.validate(data, { abortEarly: false });
   } catch (error) {
     if (error instanceof ValidationError) {
-      console.log(error.errors)
       return { message: error.errors.join(", ")};
     }
     return { message: "Invalid data provided." };

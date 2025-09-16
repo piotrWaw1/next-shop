@@ -1,4 +1,4 @@
-import { ProductsList } from "@/components/product/ProductsList";
+import { ProductsList } from "@/components/products/ProductsList";
 import { Filters } from "@/components/filters/Filters";
 
 export interface SearchParams {

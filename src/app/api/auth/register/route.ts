@@ -10,7 +10,6 @@ export async function POST(request: Request) {
     //TODO: validate email and password
 
     const user = await db.select().from(usersTable).where(eq(usersTable.email, email));
-    console.log(user.length > 0)
     if (user.length > 0) {
       return NextResponse.json({ message: 'User already exists.' }, { status: 409 });
     }

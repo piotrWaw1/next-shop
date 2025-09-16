@@ -1,6 +1,6 @@
 import { SearchParams } from "@/app/(with-navbar)/page";
 import { Filters } from "@/components/filters/Filters";
-import { ProductsList } from "@/components/product/ProductsList";
+import { ProductsList } from "@/components/products/ProductsList";
 import { isCategoryExist } from "@/lib/data/categories";
 import { notFound } from "next/navigation";
 
@@ -8,12 +8,12 @@ interface CategoryParams {
   category: string;
 }
 
-interface CategoryParams {
+interface CategoryProps {
   params: Promise<CategoryParams>,
   searchParams?: Promise<SearchParams>;
 }
 
-export default async function Category(props: CategoryParams) {
+export default async function Category(props: CategoryProps) {
 
   const { category } = await props.params;
   const { exist, result } = await isCategoryExist(category);

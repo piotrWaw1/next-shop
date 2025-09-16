@@ -54,7 +54,6 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
     conditions.push(ilike(productsCategoryTable.title, normalizedCategory));
 
     if (searchQuery) {
-      console.log("Category query")
       conditions.push(ilike(productsTable.title, `%${searchQuery}%`))
     }
     baseQuery = baseQuery.where(and(...conditions));

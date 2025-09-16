@@ -36,7 +36,6 @@ export function LoginForm() {
       password: requestData.password,
       redirect: false
     });
-    console.log("response")
     console.log(response)
 
     if (response?.ok) {

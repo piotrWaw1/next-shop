@@ -1,10 +1,9 @@
-import { ProductCard } from "@/components/product/ProductCard";
+import { ProductCard } from "@/components/products/ProductCard";
 import { fetchProducts } from "@/lib/data/products";
 import { Product } from "@/db/schema/schema";
 import { Suspense } from "react";
-import { PaginationHandler } from "@/components/product/PaginationHandler";
+import { PaginationHandler } from "@/components/products/PaginationHandler";
 import { SearchParams } from "@/app/(with-navbar)/page";
-
 
 interface Params {
   category?: string;

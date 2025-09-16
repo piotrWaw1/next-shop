@@ -15,6 +15,8 @@ export const productsTable = pgTable("products", {
   description: varchar({ length: 255 }).notNull(),
   price: doublePrecision().notNull(),
   category: integer().notNull().references(() => productsCategoryTable.id, { onDelete: "cascade" }),
+  amount: integer(),
+  warranty: integer(),
 })
 export type Product = InferSelectModel<typeof productsTable>;
 
