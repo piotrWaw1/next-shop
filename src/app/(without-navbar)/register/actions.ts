@@ -9,7 +9,13 @@ import { hash } from "bcrypt";
 
 const registerFormSchema = object({
   email: string().email().required(),
-  password: string().min(8).required(),
+  password: string()
+    .min(8, "Password must be at least 8 characters")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[^\s]{8,}$/,
+      "Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+    )
+    .required("Password is required"),
 });
 
 export async function registerUser(state: any, formData: FormData) {

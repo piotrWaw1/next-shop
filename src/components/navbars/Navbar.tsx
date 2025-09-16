@@ -87,9 +87,11 @@ export async function Navbar() {
           <SearchBar/>
           <ModeToggle/>
           {session ? <ProfileMenu/> :
-            <Button>
-              <Link href="/login">Sign in</Link>
-            </Button>
+            <Link href="/login">
+              <Button>
+                Sign in
+              </Button>
+            </Link>
           }
 
         </div>
