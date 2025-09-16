@@ -25,7 +25,8 @@ export const productsImageTable = pgTable("products_images", {
   url: varchar({ length: 500 }).notNull(),
 })
 
-export const productsCategoryTable = pgTable("products_categorys", {
+export const productsCategoryTable = pgTable("products_categories", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 255 }).notNull(),
+  description: varchar({ length: 255 }).notNull(),
 })

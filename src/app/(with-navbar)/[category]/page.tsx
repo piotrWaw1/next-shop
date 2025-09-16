@@ -24,10 +24,10 @@ export default async function Category(props: CategoryParams) {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-5">
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">{result[0].title}</h2>
-          <p className="text-gray-600">Category</p>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{result[0].title}</h2>
+          <p className="text-gray-600 dark:text-gray-300">{result[0].description}</p>
         </div>
         <Filters/>
       </div>
