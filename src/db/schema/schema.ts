@@ -1,4 +1,4 @@
-import { doublePrecision, integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { boolean, doublePrecision, integer, pgTable, varchar } from "drizzle-orm/pg-core";
 import { InferSelectModel } from "drizzle-orm";
 
 export const usersTable = pgTable("users", {
@@ -7,6 +7,7 @@ export const usersTable = pgTable("users", {
   lastName: varchar({ length: 255 }),
   email: varchar({ length: 255 }).notNull().unique(),
   password: varchar({ length: 255 }).notNull(),
+  sellerStatus: boolean().default(false).notNull(),
 });
 
 export const productsTable = pgTable("products", {

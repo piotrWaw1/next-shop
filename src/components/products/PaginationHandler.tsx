@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/pagination"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import PaginationSeparator from "@/components/pagination_separator/PaginationSeparator";
+import PaginationSeparator from "@/components/pagination-separator/PaginationSeparator";
 
 const PAGES_OFFSET = 1;
 

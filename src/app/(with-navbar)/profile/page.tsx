@@ -45,19 +45,14 @@ const purchases = [
 ]
 
 export default async function Profile() {
-  const session = await getServerSession(authOptions);
-  console.log(session)
 
+  const session = await getServerSession(authOptions)
+  console.log(session)
   return (
-    <div>
+    <>
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className="text-left">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Profile</h2>
-          </div>
-        </div>
-
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Profile</h2>
         <ProfileButtons/>
       </div>
 
@@ -104,6 +99,6 @@ export default async function Profile() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </>
   )
 }

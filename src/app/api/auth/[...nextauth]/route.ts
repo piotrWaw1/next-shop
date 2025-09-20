@@ -43,9 +43,10 @@ export const authOptions: NextAuthOptions = {
           if (passwordCorrect) {
             return {
               id: `${user[0].id}`,
-              email: user[0].email,
-              firstName: user[0].firstName,
-              lastName: user[0].lastName
+              email: `${user[0].email}`,
+              firstName: `${user[0].firstName}`,
+              lastName: `${user[0].lastName}`,
+              sellerStatus: Boolean(user[0].sellerStatus),
             }
           }
           // Password123!@#
@@ -57,19 +58,21 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        console.log("From JWT: ",user)
         token.id = user.id;
+        token.email = user.email;
+        // @ts-ignore // TODO: FIX THIS TS ERROR
+        token.sellerStatus = user.sellerStatus;
       }
       return token;
     },
 
     async session({ session, token }) {
-
       return {
         ...session,
-        user:{
+        user: {
           id: token.id,
-          email: token.email
+          email: token.email,
+          sellerStatus: token.sellerStatus
         }
       };
     },
