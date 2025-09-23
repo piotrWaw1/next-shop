@@ -5,11 +5,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Link from "next/link";
 
-interface SessionData {
-  user?: {
-    id?: number;
-    email?: string;
-    sellerStatus?: boolean;
+export interface SessionData {
+  user: {
+    id: number;
+    email: string;
+    sellerStatus: boolean;
   }
 }
 

@@ -63,7 +63,7 @@ export function ChangePasswordFrom() {
               <FormItem className="pb-4">
                 <FormLabel>New Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="Enter current password" required/>
+                  <Input {...field} type="password" placeholder="Enter new password" required/>
                 </FormControl>
                 <FormMessage/>
               </FormItem>

@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
         email: {},
         password: {}
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid.
@@ -38,9 +38,9 @@ export const authOptions: NextAuthOptions = {
         if (credentials) {
           const { email, password } = credentials
           const user = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1)
-          const passwordCorrect = await compare(password, user[0].password)
+          const isPasswordCorrect = await compare(password, user[0].password)
 
-          if (passwordCorrect) {
+          if (isPasswordCorrect) {
             return {
               id: `${user[0].id}`,
               email: `${user[0].email}`,
