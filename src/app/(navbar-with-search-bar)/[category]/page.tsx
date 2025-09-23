@@ -1,4 +1,4 @@
-import { SearchParams } from "@/app/(with-navbar)/page";
+import { SearchParams } from "@/app/(navbar-with-search-bar)/page";
 import { Filters } from "@/components/filters/Filters";
 import { ProductsList } from "@/components/products/ProductsList";
 import { isCategoryExist } from "@/lib/data/categories";

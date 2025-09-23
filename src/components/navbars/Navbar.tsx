@@ -14,7 +14,7 @@ import NavigationMenuDropDown from "@/components/navbars/NavigationMenuDropDown"
 import { SearchBar } from "@/components/filters/SearchBar";
 import { ModeToggle } from "@/components/theme/ModeToggle";
 
-export async function Navbar() {
+export async function Navbar({ searchBar }: { searchBar?: boolean }) {
   let session = undefined;
 
   try {
@@ -84,7 +84,7 @@ export async function Navbar() {
 
         {/* Right side - Search and Sign in */}
         <div className="ml-auto flex items-center gap-4">
-          <SearchBar/>
+          {searchBar && <SearchBar/>}
           <ModeToggle/>
           {session ? <ProfileMenu/> :
             <Link href="/login">

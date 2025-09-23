@@ -6,7 +6,7 @@ import { Product } from "@/db/schema/schema";
 import Link from "next/link";
 
 interface ProductProps {
-  product: Pick<Product, "id" | "title" | "price">
+  product: Pick<Product, "id" | "title" | "price" | "amount">
 }
 
 export function ProductCard({ product }: ProductProps) {
@@ -23,7 +23,7 @@ export function ProductCard({ product }: ProductProps) {
           />
         </div>
         <CardContent className="p-4 space-y-3">
-          <h3 className="font-semibold text-lg text-gray-900 line-clamp-2 leading-tight dark:text-white">
+          <h3 className="font-semibold text-lg line-clamp-2 leading-tight">
             {product.title}
           </h3>
           <div className="flex items-center justify-between">
@@ -32,9 +32,17 @@ export function ProductCard({ product }: ProductProps) {
         </CardContent>
       </Link>
       <CardFooter>
-        <Button className="w-full" size="lg">
-          <ShoppingCart className="w-4 h-4 mr-2"/>
-          Add to Cart
+        <Button className="w-full" size="lg" disabled={product.amount === 0}>
+          {product.amount &&
+              <>
+                  <ShoppingCart className="w-4 h-4 mr-2"/>
+                  Add to Cart
+              </> ||
+              <>
+                  Not available
+              </>
+          }
+
         </Button>
       </CardFooter>
     </Card>

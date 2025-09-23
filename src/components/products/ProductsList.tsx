@@ -3,7 +3,7 @@ import { fetchProducts } from "@/lib/data/products";
 import { Product } from "@/db/schema/schema";
 import { Suspense } from "react";
 import { PaginationHandler } from "@/components/products/PaginationHandler";
-import { SearchParams } from "@/app/(with-navbar)/page";
+import { SearchParams } from "@/app/(navbar-with-search-bar)/page";
 
 interface Params {
   category?: string;

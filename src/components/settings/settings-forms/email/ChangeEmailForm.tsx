@@ -11,7 +11,6 @@ import SubmitButton from "@/components/submitButton/submitButton";
 import { changeEmail } from "@/components/settings/settings-forms/email/actions";
 
 const changeEmailFrom = object({
-  currentEmail: string().email().required(),
   newEmail: string().email().required(),
   password: string().required()
 })
@@ -25,7 +24,6 @@ export function ChangeEmailForm() {
   const form = useForm<ChangeEmailFromRequest>({
     resolver: yupResolver(changeEmailFrom),
     defaultValues: {
-      currentEmail: "",
       newEmail: "",
       password: "",
     },
@@ -36,19 +34,6 @@ export function ChangeEmailForm() {
     <TabsContent value="email" className="space-y-4 mt-6">
       <Form {...form}>
         <form action={formAction} className="space-y-2">
-          <FormField
-            name={"currentEmail"}
-            control={form.control}
-            render={({ field }) => (
-              <FormItem className="pb-4">
-                <FormLabel>Current email</FormLabel>
-                <FormControl>
-                  <Input {...field} type="email" placeholder="Enter current email" required/>
-                </FormControl>
-                <FormMessage/>
-              </FormItem>
-            )}
-          />
           <FormField
             name={"newEmail"}
             control={form.control}

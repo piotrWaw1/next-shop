@@ -34,6 +34,7 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
       id: productsTable.id,
       title: productsTable.title,
       price: productsTable.price,
+      amount: productsTable.amount,
       category: productsCategoryTable.title,
     })
     .from(productsTable)

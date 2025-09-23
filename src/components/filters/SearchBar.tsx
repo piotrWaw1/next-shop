@@ -10,7 +10,7 @@ export function SearchBar() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
+  console.log(pathname);
   const search = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
     if (value) {

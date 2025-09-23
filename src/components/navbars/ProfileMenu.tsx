@@ -16,7 +16,7 @@ export default function ProfileMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png"/>
+          <AvatarImage/>
           <AvatarFallback className="border"><User/></AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
