@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { sellerStatus } from "@/components/settings/settings-forms/seller-status/actions";
-import SubmitButton from "@/components/submitButton/submitButton";
+import SubmitButton from "@/components/submit-button/submitButton";
 
 const sellerStatusFormSchema = object({
   businessName: string().max(255).required(),

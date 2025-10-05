@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { changePassword } from "@/components/settings/settings-forms/password/actions";
-import SubmitButton from "@/components/submitButton/submitButton";
+import SubmitButton from "@/components/submit-button/submitButton";
 
 const changePasswordFrom = object({
   currentPassword: string().required(),

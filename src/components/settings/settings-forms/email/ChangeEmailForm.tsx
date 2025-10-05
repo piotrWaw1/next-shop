@@ -7,7 +7,7 @@ import React, { useActionState } from "react";
 import { InferType, object, string } from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import SubmitButton from "@/components/submitButton/submitButton";
+import SubmitButton from "@/components/submit-button/submitButton";
 import { changeEmail } from "@/components/settings/settings-forms/email/actions";
 
 const changeEmailFrom = object({

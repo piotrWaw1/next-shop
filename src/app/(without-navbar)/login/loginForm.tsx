@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, string } from "yup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import SubmitButton from "@/components/submitButton/submitButton";
+import SubmitButton from "@/components/submit-button/submitButton";
 import { useState } from "react";
 
 const loginForm = object({

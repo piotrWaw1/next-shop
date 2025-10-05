@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../app/globals.css"
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ShoppingCartContextProvider } from "@/components/shopping-cart-component/ShoppingCartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <ShoppingCartContextProvider>
+        {children}
+      </ShoppingCartContextProvider>
     </ThemeProvider>
     </body>
     </html>

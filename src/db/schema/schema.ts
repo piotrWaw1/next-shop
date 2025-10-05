@@ -33,3 +33,10 @@ export const productsCategoryTable = pgTable("products_categories", {
   title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
 })
+
+export const shoppingCartTable = pgTable("shopping_carts", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  userId: integer().notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  productId: integer().notNull().references(() => productsTable.id, { onDelete: "cascade" }),
+  amount: integer().notNull(),
+})

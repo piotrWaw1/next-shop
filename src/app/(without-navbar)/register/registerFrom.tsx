@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType, object, ref, string } from "yup";
-import SubmitButton from "@/components/submitButton/submitButton";
+import SubmitButton from "@/components/submit-button/submitButton";
 import { registerUser } from "@/app/(without-navbar)/register/actions";
 import { useActionState } from "react";
 

@@ -1,3 +1,5 @@
+'use server'
+
 import { Menu } from "lucide-react"
 import Link from "next/link"
 
@@ -13,6 +15,7 @@ import {
 import NavigationMenuDropDown from "@/components/navbars/NavigationMenuDropDown";
 import { SearchBar } from "@/components/filters/SearchBar";
 import { ModeToggle } from "@/components/theme/ModeToggle";
+import { ShoppingCartComponent } from "@/components/shopping-cart-component/ShoppingCartComponent";
 
 export async function Navbar({ searchBar }: { searchBar?: boolean }) {
   let session = undefined;
@@ -84,6 +87,7 @@ export async function Navbar({ searchBar }: { searchBar?: boolean }) {
 
         {/* Right side - Search and Sign in */}
         <div className="ml-auto flex items-center gap-4">
+          <ShoppingCartComponent/>
           {searchBar && <SearchBar/>}
           <ModeToggle/>
           {session ? <ProfileMenu/> :
