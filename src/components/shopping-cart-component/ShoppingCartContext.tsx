@@ -1,27 +1,42 @@
 'use client'
 
 import { createContext, ReactNode, useState } from "react";
+import { ShoppingCartData } from "@/lib/data/shopping-cart/shoppingCartGetData";
 
 interface ShoppingCartProviderProps {
   children: ReactNode;
 }
 
-//TODO: addToCart, increaseAmount, decreaseAmount, deleteFromCart, getItemsQuantity - all for localStorage
+//TODO: increaseAmount, decreaseAmount, getItemsQuantity - all for localStorage
 interface ShoppingCartContextState {
-  data: string;
+  data: ShoppingCartData[];
+  addToCart: (productId: number, amount: number) => void;
+  deleteFromCart: (productId: number) => void;
 }
 
 const initialState: ShoppingCartContextState = {
-  data: ""
+  data: [],
+  addToCart: () => undefined,
+  deleteFromCart: () => undefined,
 }
 
-const ShoppingCartContext = createContext<ShoppingCartContextState>(initialState)
+export const ShoppingCartContext = createContext<ShoppingCartContextState>(initialState)
 
 export function ShoppingCartContextProvider({ children }: ShoppingCartProviderProps) {
-  const [data, setData] = useState("")
+  const [data, setData] = useState<ShoppingCartData[]>([])
+
+  const addToCart = (productId: number, amount: number) => {
+
+  }
+
+  const deleteFromCart = (productId: number) => {
+
+  }
 
   const contextValue: ShoppingCartContextState = {
-    data
+    data,
+    addToCart,
+    deleteFromCart
   };
 
   return (

@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { Heart, Minus, Plus, Share2 } from "lucide-react";
+import {  Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -42,23 +42,6 @@ export function ProductDetailsPicker({ amount }: ProductDetailsPickerProps) {
             <p className="font-semibold text-gray-400 dark:text-gray-500">Not available</p>
           }
 
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="space-y-3">
-        <Button className="w-full" size="lg" disabled={!amount}>
-          Add to Cart
-        </Button>
-        <div className="flex gap-3">
-          <Button variant="outline" className="flex-1 bg-transparent" disabled={!amount}>
-            <Heart className="w-4 h-4 mr-2"/>
-            Wishlist
-          </Button>
-          <Button variant="outline" className="flex-1 bg-transparent" disabled={!amount}>
-            <Share2 className="w-4 h-4 mr-2"/>
-            Share
-          </Button>
         </div>
       </div>
     </>

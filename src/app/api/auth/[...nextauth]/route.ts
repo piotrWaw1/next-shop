@@ -46,10 +46,9 @@ export const authOptions: NextAuthOptions = {
               email: `${user[0].email}`,
               firstName: `${user[0].firstName}`,
               lastName: `${user[0].lastName}`,
-              sellerStatus: Boolean(user[0].sellerStatus),
+              admin: Boolean(user[0].admin),
             }
           }
-          // Password123!@#
         }
         return null
       }
@@ -61,7 +60,7 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.email = user.email;
         // @ts-ignore // TODO: FIX THIS TS ERROR
-        token.sellerStatus = user.sellerStatus;
+        token.admin = user.admin;
       }
       return token;
     },
@@ -72,7 +71,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           id: token.id,
           email: token.email,
-          sellerStatus: token.sellerStatus
+          admin: token.admin
         }
       };
     },

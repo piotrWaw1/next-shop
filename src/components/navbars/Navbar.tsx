@@ -16,12 +16,13 @@ import NavigationMenuDropDown from "@/components/navbars/NavigationMenuDropDown"
 import { SearchBar } from "@/components/filters/SearchBar";
 import { ModeToggle } from "@/components/theme/ModeToggle";
 import { ShoppingCartComponent } from "@/components/shopping-cart-component/ShoppingCartComponent";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function Navbar({ searchBar }: { searchBar?: boolean }) {
   let session = undefined;
 
   try {
-    session = await getServerSession();
+    session = await getServerSession(authOptions);
   } catch (e) {
     await signOut()
   }
@@ -87,10 +88,10 @@ export async function Navbar({ searchBar }: { searchBar?: boolean }) {
 
         {/* Right side - Search and Sign in */}
         <div className="ml-auto flex items-center gap-4">
-          <ShoppingCartComponent/>
+          {session && <ShoppingCartComponent/>}
           {searchBar && <SearchBar/>}
           <ModeToggle/>
-          {session ? <ProfileMenu/> :
+          {session ? <ProfileMenu admin={session.user.admin}/> :
             <Link href="/login">
               <Button>
                 Sign in

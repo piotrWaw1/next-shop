@@ -7,8 +7,10 @@ export const usersTable = pgTable("users", {
   lastName: varchar({ length: 255 }),
   email: varchar({ length: 255 }).notNull().unique(),
   password: varchar({ length: 255 }).notNull(),
-  sellerStatus: boolean().default(false).notNull(),
+  admin: boolean().default(false).notNull(),
 });
+export type User = InferSelectModel<typeof usersTable>;
+
 
 export const productsTable = pgTable("products", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -18,6 +20,7 @@ export const productsTable = pgTable("products", {
   category: integer().notNull().references(() => productsCategoryTable.id, { onDelete: "cascade" }),
   amount: integer(),
   warranty: integer(),
+  sold: integer().notNull().default(0),
 })
 export type Product = InferSelectModel<typeof productsTable>;
 
@@ -34,9 +37,11 @@ export const productsCategoryTable = pgTable("products_categories", {
   description: varchar({ length: 255 }).notNull(),
 })
 
-export const shoppingCartTable = pgTable("shopping_carts", {
+export const cartsTable = pgTable("carts", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   userId: integer().notNull().references(() => usersTable.id, { onDelete: "cascade" }),
   productId: integer().notNull().references(() => productsTable.id, { onDelete: "cascade" }),
-  amount: integer().notNull(),
+  amount: integer().default(1).notNull(),
 })
+
+export type Cart = InferSelectModel<typeof cartsTable>;

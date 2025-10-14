@@ -2,10 +2,11 @@
 // import { Button } from "@/components/ui/button"
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Star } from "lucide-react"
+import { Heart, Share2, Star } from "lucide-react"
 import { getProductInformation } from "@/lib/data/productDetails";
 import { ProductAvailabilityAndPolicy } from "@/components/productView/productDescription/ProductAvailabilityAndPolicy";
 import { ProductDetailsPicker } from "@/components/productView/productDescription/ProductDetailsPicker";
+import { Button } from "@/components/ui/button";
 
 interface ProductDetailsProps {
   productId: string;
@@ -92,7 +93,23 @@ export async function ProductDetails(props: ProductDetailsProps) {
       {/*  </Select>*/}
       {/*</div>*/}
 
-      <ProductDetailsPicker {...data}/>
+      <ProductDetailsPicker amount={data.amount}/>
+      {/* Action Buttons */}
+      <div className="space-y-3">
+        <Button className="w-full" size="lg" disabled={!data.amount}>
+          Add to Cart
+        </Button>
+        <div className="flex gap-3">
+          <Button variant="outline" className="flex-1 bg-transparent" disabled={!data.amount}>
+            <Heart className="w-4 h-4 mr-2"/>
+            Wishlist
+          </Button>
+          <Button variant="outline" className="flex-1 bg-transparent" disabled={!data.amount}>
+            <Share2 className="w-4 h-4 mr-2"/>
+            Share
+          </Button>
+        </div>
+      </div>
 
       {/* Product Features */}
       <ProductAvailabilityAndPolicy {...data}/>

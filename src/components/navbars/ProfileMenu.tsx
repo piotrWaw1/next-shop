@@ -11,7 +11,7 @@ import { User } from "lucide-react";
 import { LogOutButton } from "@/components/navbars/LogOutButton";
 import Link from "next/link";
 
-export default function ProfileMenu() {
+export default function ProfileMenu({ admin }: { admin: boolean }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,11 +22,19 @@ export default function ProfileMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuGroup>
-          <Link href="/profile">
-            <DropdownMenuItem>
-              Profile
-            </DropdownMenuItem>
-          </Link>
+          {admin ?
+            <Link href="/admin">
+              <DropdownMenuItem>
+                Admin dashboard
+              </DropdownMenuItem>
+            </Link> :
+            <Link href="/profile">
+              <DropdownMenuItem>
+                Profile
+              </DropdownMenuItem>
+            </Link>
+          }
+
           <Link href="/profile/settings">
             <DropdownMenuItem>
               Settings
