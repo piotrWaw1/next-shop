@@ -38,6 +38,7 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
       price: productsTable.price,
       amount: productsTable.amount,
       category: productsCategoryTable.title,
+      sold: productsTable.sold,
     })
     .from(productsTable)
     .innerJoin(

@@ -32,16 +32,18 @@ async function main() {
   // console.log(await db.select().from(usersTable))
 
   // fill categories table
-  for (const category of categories) {
-    await db.insert(productsCategoryTable).values(category);
-  }
-  console.log("Categories done!")
+  // for (const category of categories) {
+  //   await db.insert(productsCategoryTable).values(category);
+  // }
+  // console.log("Categories done!")
 
   // fill products table
-  for (const product of products) {
-    await db.insert(productsTable).values(product);
-  }
-  console.log("Products done!")
+  // for (const product of products) {
+  //   await db.insert(productsTable).values(product);
+  // }
+  // console.log("Products done!")
+
+  console.log(await db.select().from(productsTable))
 
   // const existingCategories = await db.select().from(productsCategoryTable);
   // console.log('Existing categories:', existingCategories);

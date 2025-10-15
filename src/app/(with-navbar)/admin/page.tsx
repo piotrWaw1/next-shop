@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Pencil, Trash2, Plus } from "lucide-react"
 import { fetchProducts } from "@/lib/data/products";
 import { PaginationHandler } from "@/components/products/PaginationHandler";
 import { SearchParams } from "@/app/(navbar-with-search-bar)/page";
+import { SortingByQuantity } from "@/components/admin-dashboard-table/SortingByQuantity";
 
 const DEFAULT_PAGE_SIZE = 20
 
-export default async function AdminDashboard(props: {searchParams?: Promise<SearchParams>;}) {
+export default async function AdminDashboard(props: { searchParams?: Promise<SearchParams>; }) {
 
   const searchParams = await props.searchParams
 
@@ -27,9 +28,9 @@ export default async function AdminDashboard(props: {searchParams?: Promise<Sear
           <TableHeader>
             <TableRow>
               <TableHead>Product Title</TableHead>
-              <TableHead>Quantity</TableHead>
+              <SortingByQuantity paramName="quantity">Quantity</SortingByQuantity>
               <TableHead>Availability</TableHead>
-              <TableHead>Sold</TableHead>
+              <SortingByQuantity paramName="sold">Sold</SortingByQuantity>
               <TableHead className="text-right">
                 <Button size="sm">
                   <Plus/>
