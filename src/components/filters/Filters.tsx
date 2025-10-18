@@ -12,7 +12,7 @@ export function Filters() {
   const pathname = usePathname();
 
   const currentPageSize = searchParams.get('pageSize') || DEFAULT_PAGE_SIZE;
-  const currentSortOrder = searchParams.get("sortOrder") || "default";
+  const currentSortOrder = searchParams.get("price") || "default";
 
   const setPageSize = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -28,8 +28,8 @@ export function Filters() {
   const setSortBy = (value: string) => {
     const params = new URLSearchParams(searchParams);
     value === "default"
-      ? params.delete("sortOrder")
-      : params.set("sortOrder", value);
+      ? params.delete("price")
+      : params.set("price", value);
 
     params.delete("page");
 

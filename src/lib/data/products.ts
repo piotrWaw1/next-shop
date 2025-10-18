@@ -27,7 +27,18 @@ async function fetchProductsPages(pageSize: number, category?: string, query?: s
   return Math.ceil(productsCount[0].count / pageSize);
 }
 
-export async function fetchProducts(pageSize: number, page: number, sortOrder?: "asc" | "desc", category?: string, searchQuery?: string) {
+type FetchProductsOptions = {
+  page: number;
+  pageSize: number;
+  sortOrder?: "asc" | "desc";
+  sortBy?: "price" | "sold" | "amount",
+  category?: string;
+  searchQuery?: string
+}
+
+export async function fetchProducts(props: FetchProductsOptions) {
+  const {page, pageSize, sortOrder, sortBy, category, searchQuery} = props;
+
   const offset = (page - 1) * pageSize;
   let normalizedCategory;
 
@@ -46,10 +57,24 @@ export async function fetchProducts(pageSize: number, page: number, sortOrder?: 
       eq(productsTable.category, productsCategoryTable.id)
     ) as any;
 
-  if (sortOrder) {
-    baseQuery = baseQuery.orderBy(
-      sortOrder === "asc" ? asc(productsTable.price) : desc(productsTable.price)
-    );
+  if (sortOrder && sortBy) {
+    const direction = sortOrder === "asc" ? asc : desc;
+    let columnToSort;
+    switch (sortBy) {
+      case "price":
+        columnToSort = productsTable.price;
+        break;
+      case "sold":
+        columnToSort = productsTable.sold;
+        break;
+      case "amount":
+        columnToSort = productsTable.amount;
+        break;
+      default:
+        columnToSort = productsTable.price;
+        break;
+    }
+    baseQuery = baseQuery.orderBy(direction(columnToSort));
   }
 
   if (category) {

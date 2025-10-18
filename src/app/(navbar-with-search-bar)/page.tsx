@@ -1,15 +1,19 @@
 import { ProductsList } from "@/components/products/ProductsList";
 import { Filters } from "@/components/filters/Filters";
 
+type SortOrder = "asc" | "desc";
+
 export interface SearchParams {
   query?: string;
   page?: string;
   pageSize?: string;
-  sortOrder?: "desc" | "asc";
+  price?: SortOrder;
+  amount?: SortOrder;
+  sold?: SortOrder;
   category?: string
 }
 
-export default async function Home(props: { searchParams?: Promise<SearchParams> }) {
+export default function Home(props: { searchParams?: Promise<SearchParams> }) {
 
   return (
     <>

@@ -12,12 +12,22 @@ export default async function AdminDashboard(props: { searchParams?: Promise<Sea
 
   const searchParams = await props.searchParams
 
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const sortOrder = searchParams?.sortOrder;
+  const searchQuery = searchParams?.query || "";
+  const page = Number(searchParams?.page) || 1;
+
+  const amount = searchParams?.amount;
+  const sold = searchParams?.sold;
+  const sortBy = amount ? "amount" : sold ? "sold" : undefined;
+
   const pageSize = Number(searchParams?.pageSize) || DEFAULT_PAGE_SIZE;
 
-  const { products, totalPages } = await fetchProducts(pageSize, currentPage, sortOrder, query)
+  const { products, totalPages } = await fetchProducts({
+    page,
+    pageSize,
+    sortOrder: amount || sold,
+    sortBy,
+    searchQuery
+  });
 
   return (
     <div className="container mx-auto py-10">
@@ -28,7 +38,7 @@ export default async function AdminDashboard(props: { searchParams?: Promise<Sea
           <TableHeader>
             <TableRow>
               <TableHead>Product Title</TableHead>
-              <SortingByQuantity paramName="quantity">Quantity</SortingByQuantity>
+              <SortingByQuantity paramName="amount">Amount</SortingByQuantity>
               <TableHead>Availability</TableHead>
               <SortingByQuantity paramName="sold">Sold</SortingByQuantity>
               <TableHead className="text-right">

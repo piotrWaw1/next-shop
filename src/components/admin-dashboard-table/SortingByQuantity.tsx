@@ -2,7 +2,7 @@
 
 import { TableHead } from "@/components/ui/table";
 import { ReactNode } from "react";
-import {ArrowDownUp, ArrowDownWideNarrow, ArrowUpNarrowWide } from "lucide-react";
+import { ArrowDownUp, ArrowDownWideNarrow, ArrowUpNarrowWide } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SortingByQuantityProps {
@@ -10,7 +10,7 @@ interface SortingByQuantityProps {
   paramName: string;
 }
 
-const ICON_SIZE= 22;
+const ICON_SIZE = 22;
 
 export function SortingByQuantity(props: SortingByQuantityProps) {
   const { children, paramName } = props;
@@ -20,13 +20,12 @@ export function SortingByQuantity(props: SortingByQuantityProps) {
   const searchParams = useSearchParams();
   const currentSort = searchParams.get(paramName)
 
-
   const setParams = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.delete('page');
 
     for (const [key, value] of searchParams.entries()) {
-      if ((value === 'asc' || value === 'desc') && key !== pathname) {
+      if (value === 'asc' || value === 'desc') {
         params.delete(key)
       }
     }

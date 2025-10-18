@@ -19,9 +19,9 @@ export async function ProductsList(props: {
   const searchParams = await props.searchParams
   const params = await props.params;
 
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const sortOrder = searchParams?.sortOrder;
+  const searchQuery = searchParams?.query || "";
+  const page = Number(searchParams?.page) || 1;
+  const sortOrder = searchParams?.price;
   const pageSize = Number(searchParams?.pageSize) || DEFAULT_PAGE_SIZE;
 
   const category = params?.category;
@@ -29,10 +29,10 @@ export async function ProductsList(props: {
   const { products, totalPages }: {
     products: Awaited<Product[]>,
     totalPages: number
-  } = await fetchProducts(pageSize, currentPage, sortOrder, category, query);
+  } = await fetchProducts({ page, pageSize, sortOrder, sortBy: "price", category, searchQuery });
 
   return (
-    <Suspense key={query + currentPage + sortOrder + pageSize} fallback="loading">
+    <Suspense key={searchQuery + page + sortOrder + pageSize} fallback="loading">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products?.map((product) => (
           <ProductCard product={product} key={product.id}/>
