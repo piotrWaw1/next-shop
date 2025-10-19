@@ -7,46 +7,46 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SortingByQuantityProps {
   children: ReactNode;
+  className?: string;
   paramName: string;
 }
 
 const ICON_SIZE = 22;
 
 export function SortingByQuantity(props: SortingByQuantityProps) {
-  const { children, paramName } = props;
+  const { children, paramName, className } = props;
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentSort = searchParams.get(paramName)
+  const currentSortOrder = searchParams.get("sortBy") === paramName ? searchParams.get("sortOrder") : null;
 
   const setParams = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.delete('page');
 
-    for (const [key, value] of searchParams.entries()) {
-      if (value === 'asc' || value === 'desc') {
-        params.delete(key)
-      }
-    }
-
-    if (currentSort === 'asc') {
-      params.set(paramName, 'desc');
-    } else if (currentSort === 'desc') {
-      params.delete(paramName);
+    if (currentSortOrder === 'asc') {
+      params.set('sortBy', paramName);
+      params.set('sortOrder', 'desc');
+    } else if (currentSortOrder === 'desc') {
+      params.delete('sortOrder');
+      params.delete('sortBy');
     } else {
-      params.set(paramName, 'asc');
+      params.set('sortBy', paramName);
+      params.set('sortOrder', 'asc');
     }
 
     router.push(pathname + '?' + params.toString());
   }
 
   return (
-    <TableHead onClick={setParams} className="flex items-center gap-1 cursor-pointer">
-      {children}
-      {currentSort === 'asc' && <ArrowUpNarrowWide size={ICON_SIZE}/>}
-      {currentSort === 'desc' && <ArrowDownWideNarrow size={ICON_SIZE}/>}
-      {!currentSort && <ArrowDownUp size={ICON_SIZE}/>}
+    <TableHead onClick={setParams} className={className}>
+      <div className="flex items-center gap-1 cursor-pointer">
+        {children}
+        {currentSortOrder === 'asc' && <ArrowUpNarrowWide size={ICON_SIZE}/>}
+        {currentSortOrder === 'desc' && <ArrowDownWideNarrow size={ICON_SIZE}/>}
+        {!currentSortOrder && <ArrowDownUp size={ICON_SIZE}/>}
+      </div>
     </TableHead>
   )
 }

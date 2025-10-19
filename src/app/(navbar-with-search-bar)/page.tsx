@@ -1,15 +1,12 @@
 import { ProductsList } from "@/components/products/ProductsList";
 import { Filters } from "@/components/filters/Filters";
 
-type SortOrder = "asc" | "desc";
-
 export interface SearchParams {
   query?: string;
   page?: string;
   pageSize?: string;
-  price?: SortOrder;
-  amount?: SortOrder;
-  sold?: SortOrder;
+  sortBy?: string;
+  sortOrder?: string;
   category?: string
 }
 

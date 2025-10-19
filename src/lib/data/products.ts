@@ -30,14 +30,14 @@ async function fetchProductsPages(pageSize: number, category?: string, query?: s
 type FetchProductsOptions = {
   page: number;
   pageSize: number;
-  sortOrder?: "asc" | "desc";
-  sortBy?: "price" | "sold" | "amount",
+  sortOrder?: string;
+  sortBy?: string,
   category?: string;
   searchQuery?: string
 }
 
 export async function fetchProducts(props: FetchProductsOptions) {
-  const {page, pageSize, sortOrder, sortBy, category, searchQuery} = props;
+  const { page, pageSize, sortOrder, sortBy, category, searchQuery } = props;
 
   const offset = (page - 1) * pageSize;
   let normalizedCategory;

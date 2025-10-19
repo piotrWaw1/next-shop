@@ -12,7 +12,8 @@ export function Filters() {
   const pathname = usePathname();
 
   const currentPageSize = searchParams.get('pageSize') || DEFAULT_PAGE_SIZE;
-  const currentSortOrder = searchParams.get("price") || "default";
+  const sortOrder = searchParams.get("sortOrder")
+  const currentSortOrder = searchParams.get("sortBy") === "price" ? (sortOrder || "default") : "default";
 
   const setPageSize = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -27,11 +28,15 @@ export function Filters() {
 
   const setSortBy = (value: string) => {
     const params = new URLSearchParams(searchParams);
-    value === "default"
-      ? params.delete("price")
-      : params.set("price", value);
-
     params.delete("page");
+
+    if (value === "default") {
+      params.delete("sortBy")
+      params.delete("sortOrder")
+    } else {
+      params.set("sortBy", "price");
+      params.set("sortOrder", value);
+    }
 
     replace(`${pathname}?${params.toString()}`)
   }

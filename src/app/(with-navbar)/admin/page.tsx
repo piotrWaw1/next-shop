@@ -5,6 +5,7 @@ import { fetchProducts } from "@/lib/data/products";
 import { PaginationHandler } from "@/components/products/PaginationHandler";
 import { SearchParams } from "@/app/(navbar-with-search-bar)/page";
 import { SortingByQuantity } from "@/components/admin-dashboard-table/SortingByQuantity";
+import Link from "next/link";
 
 const DEFAULT_PAGE_SIZE = 20
 
@@ -15,43 +16,44 @@ export default async function AdminDashboard(props: { searchParams?: Promise<Sea
   const searchQuery = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1;
 
-  const amount = searchParams?.amount;
-  const sold = searchParams?.sold;
-  const sortBy = amount ? "amount" : sold ? "sold" : undefined;
+  const sortBy = searchParams?.sortBy;
+  const sortOrder = searchParams?.sortOrder;
 
   const pageSize = Number(searchParams?.pageSize) || DEFAULT_PAGE_SIZE;
 
   const { products, totalPages } = await fetchProducts({
     page,
     pageSize,
-    sortOrder: amount || sold,
+    sortOrder,
     sortBy,
     searchQuery
   });
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-6">Admin dashboard</h1>
-
       <div className="rounded-lg border">
         <Table>
-          <TableHeader>
+          <TableHeader className="table-fixed">
             <TableRow>
               <TableHead>Product Title</TableHead>
               <SortingByQuantity paramName="amount">Amount</SortingByQuantity>
               <TableHead>Availability</TableHead>
               <SortingByQuantity paramName="sold">Sold</SortingByQuantity>
+              <SortingByQuantity paramName="price">Price</SortingByQuantity>
               <TableHead className="text-right">
-                <Button size="sm">
-                  <Plus/>
-                </Button>
+                <Link href="/admin/add-product">
+                  <Button size="sm">
+                    <Plus/>
+                  </Button>
+                </Link>
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {products.map((product) => (
               <TableRow key={product.id}>
-                <TableCell className="font-medium">{product.title}</TableCell>
+                <TableCell className="font-medium w-[30%]">{product.title}</TableCell>
                 <TableCell>{product.amount}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
@@ -62,6 +64,7 @@ export default async function AdminDashboard(props: { searchParams?: Promise<Sea
                   </div>
                 </TableCell>
                 <TableCell>{product.sold}</TableCell>
+                <TableCell>{product.price} PLN</TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
                     <Button variant="ghost" size="icon">

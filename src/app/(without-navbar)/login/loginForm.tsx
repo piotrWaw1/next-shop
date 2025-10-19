@@ -74,7 +74,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <SubmitButton className="w-full">
+        <SubmitButton className="w-full" disabled={!form.formState.isValid}>
           Login
         </SubmitButton>
         {isSuccess || <p className="mt-2 text-destructive text-sm">Incorrect email or password</p>}

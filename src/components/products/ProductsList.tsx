@@ -21,15 +21,16 @@ export async function ProductsList(props: {
 
   const searchQuery = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1;
-  const sortOrder = searchParams?.price;
+  const sortOrder = searchParams?.sortOrder;
   const pageSize = Number(searchParams?.pageSize) || DEFAULT_PAGE_SIZE;
+  const sortBy = searchParams?.sortBy;
 
   const category = params?.category;
 
   const { products, totalPages }: {
     products: Awaited<Product[]>,
     totalPages: number
-  } = await fetchProducts({ page, pageSize, sortOrder, sortBy: "price", category, searchQuery });
+  } = await fetchProducts({ page, pageSize, sortOrder, sortBy, category, searchQuery });
 
   return (
     <Suspense key={searchQuery + page + sortOrder + pageSize} fallback="loading">
