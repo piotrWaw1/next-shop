@@ -11,7 +11,6 @@ export const usersTable = pgTable("users", {
 });
 export type User = InferSelectModel<typeof usersTable>;
 
-
 export const productsTable = pgTable("products", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 255 }).notNull(),
@@ -36,6 +35,7 @@ export const productsCategoryTable = pgTable("products_categories", {
   title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
 })
+export type Category = InferSelectModel<typeof productsCategoryTable>;
 
 export const cartsTable = pgTable("carts", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -43,5 +43,4 @@ export const cartsTable = pgTable("carts", {
   productId: integer().notNull().references(() => productsTable.id, { onDelete: "cascade" }),
   amount: integer().default(1).notNull(),
 })
-
 export type Cart = InferSelectModel<typeof cartsTable>;

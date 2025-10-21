@@ -6,12 +6,16 @@ import { PaginationHandler } from "@/components/products/PaginationHandler";
 import { SearchParams } from "@/app/(navbar-with-search-bar)/page";
 import { SortingByQuantity } from "@/components/admin-dashboard-table/SortingByQuantity";
 import Link from "next/link";
+import { SearchBar } from "@/components/filters/SearchBar";
+import { CategorySelect } from "@/components/admin-dashboard/CategorySelect";
+import { fetchAllCategories } from "@/lib/data/categories";
 
 const DEFAULT_PAGE_SIZE = 20
 
 export default async function AdminDashboard(props: { searchParams?: Promise<SearchParams>; }) {
 
   const searchParams = await props.searchParams
+  const categories = fetchAllCategories()
 
   const searchQuery = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1;
@@ -20,18 +24,24 @@ export default async function AdminDashboard(props: { searchParams?: Promise<Sea
   const sortOrder = searchParams?.sortOrder;
 
   const pageSize = Number(searchParams?.pageSize) || DEFAULT_PAGE_SIZE;
+  const category = searchParams?.category;
 
   const { products, totalPages } = await fetchProducts({
     page,
     pageSize,
     sortOrder,
     sortBy,
+    category,
     searchQuery
   });
 
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-6">Admin dashboard</h1>
+      <div className="flex flex-row items-end gap-8 mb-6">
+        <SearchBar/>
+        <CategorySelect categories={categories}/>
+      </div>
       <div className="rounded-lg border">
         <Table>
           <TableHeader className="table-fixed">

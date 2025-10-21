@@ -89,9 +89,9 @@ export async function Navbar({ searchBar }: { searchBar?: boolean }) {
         {/* Right side - Search and Sign in */}
         <div className="ml-auto flex items-center gap-4">
           {session && <ShoppingCartComponent/>}
-          {searchBar && <SearchBar/>}
+          {searchBar && <SearchBar inputClassName="w-[200px] lg:w-[300px]"/>}
           <ModeToggle/>
-          {session ? <ProfileMenu admin={session.user.admin}/> :
+          {session ? <ProfileMenu admin={session?.user?.admin}/> :
             <Link href="/login">
               <Button>
                 Sign in

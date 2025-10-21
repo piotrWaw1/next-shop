@@ -5,8 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import { cn } from "@/lib/utils";
 
-export function SearchBar() {
+interface SearchBarProps {
+  className?: string;
+  inputClassName?: string;
+}
+
+export function SearchBar(props: SearchBarProps) {
+  const { inputClassName, className } = props
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -24,10 +32,10 @@ export function SearchBar() {
   return (
     <>
       {/*Desktop*/}
-      <div className="relative hidden sm:block">
+      <div className={cn("relative hidden sm:block w-full", className)}>
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
         <Input onChange={(e) => search(e.target.value)} type="search" placeholder="Search products..."
-               className="pl-8 w-[200px] lg:w-[300px]"/>
+               className={cn("pl-8", inputClassName)}/>
       </div>
       {/*Mobile*/}
       <Button variant="outline" size="icon" className="sm:hidden bg-transparent">
