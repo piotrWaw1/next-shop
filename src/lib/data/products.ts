@@ -20,7 +20,7 @@ async function fetchProductsPages(pageSize: number, category?: string, query?: s
     .from(productsTable)
     .innerJoin(
       productsCategoryTable,
-      eq(productsTable.category, productsCategoryTable.id)
+      eq(productsTable.categoryId, productsCategoryTable.id)
     )
     .where(and(...conditions));
 
@@ -54,7 +54,7 @@ export async function fetchProducts(props: FetchProductsOptions) {
     .from(productsTable)
     .innerJoin(
       productsCategoryTable,
-      eq(productsTable.category, productsCategoryTable.id)
+      eq(productsTable.categoryId, productsCategoryTable.id)
     ) as any;
 
   if (sortOrder && sortBy) {

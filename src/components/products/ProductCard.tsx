@@ -29,7 +29,7 @@ export function ProductCard({ product }: ProductProps) {
             {product.title}
           </h3>
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">${product.price.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">${product.price}</span>
           </div>
           {!isAvailable  && "Not available"}
         </CardContent>
